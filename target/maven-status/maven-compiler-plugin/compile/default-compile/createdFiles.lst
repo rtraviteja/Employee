@@ -1,5 +1,9 @@
+Employee\Employee\AddressDTO.class
+Employee\Employee\AddressRepository.class
+Employee\Employee\Address.class
 Employee\Employee\EmployeeServiceImpl.class
 Employee\Employee\EmployeeController.class
+Employee\Employee\JwtToken.class
 Employee\Employee\Employee.class
 Employee\Employee\EmployeeDTO.class
 Employee\Employee\App.class

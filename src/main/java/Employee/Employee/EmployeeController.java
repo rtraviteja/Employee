@@ -16,15 +16,29 @@ public class EmployeeController {
 	@Autowired
 	EmployeeService empService;
 
+	@Autowired
+	JwtToken jwtToken;
+
+	@GetMapping("/token")
+	public String getToken() {
+		return jwtToken.generateToken("teja");
+	}
+
 	@GetMapping(value = "/employees")
 	public List<EmployeeDTO> getEmployees(HttpServletRequest request) {
 
-		 String header = request.getHeader("Authorization");
+		String header = request.getHeader("Authorization");
 
-		    if (header == null || !header.equals("Bearer abc123")) {
-		        throw new RuntimeException("Unauthorized");
-		    }
-		    
+		if (header == null || !header.startsWith("Bearer ")) {
+			throw new RuntimeException("Unauthorized");
+		}
+
+		String token = header.substring(7);
+
+		if (!jwtToken.validateToken(token)) {
+			throw new RuntimeException("Invalid token");
+		}
+
 		System.out.println("GET method to fetch all employees");
 		return empService.getAllEmployees();
 	}
