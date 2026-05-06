@@ -10,21 +10,21 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtToken {
 
-	private String SECRET = "mysecretkey";
+	private String JWTKEY = "auth";
 
-	
 	public String generateToken(String username) {
 		return Jwts.builder().setSubject(username).setIssuedAt(new Date())
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30)) 
-				.signWith(SignatureAlgorithm.HS256, SECRET).compact();
+				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
+				.signWith(SignatureAlgorithm.HS256, JWTKEY).compact();
 	}
 
 	public boolean validateToken(String token) {
 		try {
-			Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token);
+			Jwts.parser().setSigningKey(JWTKEY).parseClaimsJws(token);
 			return true;
 		} catch (Exception e) {
 			return false;
 		}
 	}
+
 }
